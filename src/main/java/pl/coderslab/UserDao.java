@@ -1,4 +1,4 @@
-package workshop2;
+package pl.coderslab;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -23,7 +23,7 @@ public class UserDao {
     }
 
     public User create(User user) {
-        try (Connection conn = DbUtil.connect()) {
+        try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement =
                     conn.prepareStatement(CREATE_USER_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getUserName());
@@ -43,8 +43,8 @@ public class UserDao {
     }
 
     public User read(int userId){
-        try (Connection connection = DbUtil.connect()){
-            PreparedStatement statement = connection.prepareStatement(READ_USER_QUERY);
+        try (Connection conn = DbUtil.getConnection()){
+            PreparedStatement statement = conn.prepareStatement(READ_USER_QUERY);
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()){
@@ -62,7 +62,7 @@ public class UserDao {
     }
 
     public void update(User user) {
-        try (Connection conn = DbUtil.connect()) {
+        try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement =
                     conn.prepareStatement(UPDATE_USER_QUERY);
             statement.setString(1, user.getUserName());
@@ -76,8 +76,8 @@ public class UserDao {
     }
 
     public void delete(int userId){
-        try (Connection connection = DbUtil.connect()){
-            PreparedStatement statement = connection.prepareStatement(DELETE_USER_QUERY);
+        try (Connection conn = DbUtil.getConnection()){
+            PreparedStatement statement = conn.prepareStatement(DELETE_USER_QUERY);
             statement.setInt(1, userId);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -86,9 +86,9 @@ public class UserDao {
     }
 
     public User[] findAll(){
-        try (Connection connection = DbUtil.connect()){
+        try (Connection conn = DbUtil.getConnection()){
             User[] users = new User[0];
-            PreparedStatement statement = connection.prepareStatement(READ_ALL_USER_QUERY);
+            PreparedStatement statement = conn.prepareStatement(READ_ALL_USER_QUERY);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
                 User user = new User();

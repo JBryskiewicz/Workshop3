@@ -1,4 +1,4 @@
-package workshop2;
+package pl.coderslab;
 
 public class User {
     private int id;
@@ -39,6 +39,6 @@ public class User {
         return password;
     }
     public String toString(User user){
-        return user.id + " | " + user.email + " | " + user.userName;
+        return user.id + user.email + user.userName;
     }
 }
