@@ -1,4 +1,4 @@
-package workshop2;
+package pl.coderslab;
 
 import java.util.Scanner;
 
